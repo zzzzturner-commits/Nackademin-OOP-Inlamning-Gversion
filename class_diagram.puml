@@ -1,0 +1,46 @@
+@startuml class diagram
+    title Test case registrator
+    skinparam ClassAttributeIconSize 0
+
+    class TestCase{
+        +TestCaseTitle : string
+        +Purpose : string
+        +ExpectedResult: string
+    }
+
+    class TestCaseService{
+        -repository : TestCase[0..*]
+        +CreateTestCase(testcase : TestCase) : void
+        +GetTestCases() TestCase[0..*]
+    }
+
+    class TestCaseRepository{
+        +TryCreateTestCase (testcase : TestCase) : void
+        +GetAllTestCases() TestCase[0..*]
+    }
+
+    class TestCaseDialog{
+        +MainMenu() : void
+        +ShowCreateTestCase() : void
+        +ShowTestCases() : void
+    }
+
+    class TestCaseResult{
+        +Succeded: boolean
+        +Message: string
+        +Testcase: string
+    }
+    
+
+    TestCaseService ..> TestCaseRepository <<uses>>
+    TestCaseService ..> TestCaseDialog <<uses>>
+    TestCaseService ..> TestCaseResult <<uses>>
+    
+    TestCaseRepository ..> TestCase <<uses>>
+
+    TestCaseDialog ..> TestCase <<uses>>
+
+    TestCaseResult ..> TestCase <<uses>>
+
+    
+@enduml
